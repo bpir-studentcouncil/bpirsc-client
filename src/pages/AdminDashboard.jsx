@@ -1464,7 +1464,7 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Order</label>
+                <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Display Order</label>
                 <input
                   type="number"
                   min="0"
