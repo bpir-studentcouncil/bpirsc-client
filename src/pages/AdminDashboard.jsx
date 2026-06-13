@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   });
   const [showTeamModal, setShowTeamModal] = useState(false);
   const [teamForm, setTeamForm] = useState({
-    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 0
+    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 1
   });
 
   const [notification, setNotification] = useState('');
@@ -360,7 +360,7 @@ const AdminDashboard = () => {
         linkedin: teamForm.linkedin,
         twitter: teamForm.twitter,
         instagram: teamForm.instagram,
-        sortOrder: Number(teamForm.sortOrder) || 0
+        sortOrder: Number(teamForm.sortOrder) || 1
       };
 
       if (teamForm.id) {
@@ -781,7 +781,7 @@ const AdminDashboard = () => {
                       </div>
                       <button
                         onClick={() => {
-                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 0 });
+                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 1 });
                           setShowTeamModal(true);
                         }}
                         className="bg-accent-emerald hover:bg-emerald-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
@@ -813,7 +813,7 @@ const AdminDashboard = () => {
                           ) : (
                             team.map((member) => (
                               <tr key={member._id} className="hover:bg-slate-950/30">
-                                <td className="py-3 px-4 font-mono font-bold text-accent-cyan">{member.sortOrder || 0}</td>
+                                <td className="py-3 px-4 font-mono font-bold text-accent-cyan">{member.sortOrder || 1}</td>
                                 <td className="py-3 px-4">
                                   <img 
                                     src={member.photo || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=80'} 
@@ -846,7 +846,7 @@ const AdminDashboard = () => {
                                           linkedin: member.social?.linkedin || '',
                                           twitter: member.social?.twitter || '',
                                           instagram: member.social?.instagram || '',
-                                          sortOrder: member.sortOrder || 0
+                                          sortOrder: member.sortOrder || 1
                                         });
                                         setShowTeamModal(true);
                                       }}
