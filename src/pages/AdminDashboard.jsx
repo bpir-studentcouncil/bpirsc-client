@@ -1399,6 +1399,7 @@ const AdminDashboard = () => {
                   <input
                     type="text"
                     required
+                    placeholder="Your Full Name"
                     value={teamForm.name}
                     onChange={(e) => setTeamForm({ ...teamForm, name: e.target.value })}
                     className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs"
@@ -1409,7 +1410,7 @@ const AdminDashboard = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. President, General Secretary, Designation"
+                    placeholder="Your Designation"
                     value={teamForm.position}
                     onChange={(e) => setTeamForm({ ...teamForm, position: e.target.value })}
                     className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs"
@@ -1480,6 +1481,7 @@ const AdminDashboard = () => {
                 <textarea
                   required
                   rows="3"
+                  placeholder="Describe this team member's role, achievements, and contributions..."
                   value={teamForm.bio}
                   onChange={(e) => setTeamForm({ ...teamForm, bio: e.target.value })}
                   className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs"
