@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   });
   const [showTeamModal, setShowTeamModal] = useState(false);
   const [teamForm, setTeamForm] = useState({
-    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: ''
+    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: ''
   });
 
   const [notification, setNotification] = useState('');
@@ -358,7 +358,8 @@ const AdminDashboard = () => {
         bio: teamForm.bio,
         facebook: teamForm.facebook,
         linkedin: teamForm.linkedin,
-        twitter: teamForm.twitter
+        twitter: teamForm.twitter,
+        instagram: teamForm.instagram
       };
 
       if (teamForm.id) {
@@ -779,7 +780,7 @@ const AdminDashboard = () => {
                       </div>
                       <button
                         onClick={() => {
-                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '' });
+                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '' });
                           setShowTeamModal(true);
                         }}
                         className="bg-accent-emerald hover:bg-emerald-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
@@ -824,7 +825,8 @@ const AdminDashboard = () => {
                                   {member.social?.facebook && <span className="text-gray-400">FB</span>}
                                   {member.social?.linkedin && <span className="text-gray-400">LN</span>}
                                   {member.social?.twitter && <span className="text-gray-400">TW</span>}
-                                  {!member.social?.facebook && !member.social?.linkedin && !member.social?.twitter && <span className="text-gray-600">None</span>}
+                                  {member.social?.instagram && <span className="text-gray-400">IG</span>}
+                                  {!member.social?.facebook && !member.social?.linkedin && !member.social?.twitter && !member.social?.instagram && <span className="text-gray-600">None</span>}
                                 </td>
                                 <td className="py-3 px-4 text-center">
                                   <div className="flex justify-center gap-2">
@@ -839,7 +841,8 @@ const AdminDashboard = () => {
                                           bio: member.bio,
                                           facebook: member.social?.facebook || '',
                                           linkedin: member.social?.linkedin || '',
-                                          twitter: member.social?.twitter || ''
+                                          twitter: member.social?.twitter || '',
+                                          instagram: member.social?.instagram || ''
                                         });
                                         setShowTeamModal(true);
                                       }}
@@ -1469,7 +1472,7 @@ const AdminDashboard = () => {
 
               <div className="border-t border-slate-850 pt-3">
                 <span className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Social Media URLs (Optional)</span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   <div>
                     <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Facebook</label>
                     <input
@@ -1497,6 +1500,16 @@ const AdminDashboard = () => {
                       placeholder="https://twitter.com/..."
                       value={teamForm.twitter}
                       onChange={(e) => setTeamForm({ ...teamForm, twitter: e.target.value })}
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 outline-none text-white focus:border-accent-emerald text-[11px]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Instagram</label>
+                    <input
+                      type="text"
+                      placeholder="https://instagram.com/..."
+                      value={teamForm.instagram}
+                      onChange={(e) => setTeamForm({ ...teamForm, instagram: e.target.value })}
                       className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 outline-none text-white focus:border-accent-emerald text-[11px]"
                     />
                   </div>

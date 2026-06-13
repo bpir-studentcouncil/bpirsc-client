@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Sparkles, Hand, HeartHandshake, Award, Target, Eye, Compass, Facebook, Linkedin } from 'lucide-react';
+import { Shield, Sparkles, Hand, HeartHandshake, Award, Target, Eye, Compass, Facebook, Linkedin, Instagram } from 'lucide-react';
 
 // X (formerly Twitter) brand icon — SVG since lucide-react doesn't include it yet
 const XIcon = ({ className }) => (
@@ -212,6 +212,17 @@ const About = () => {
                         title="X (Twitter)"
                       >
                         <XIcon className="h-4 w-4" />
+                      </a>
+                    )}
+                    {member.social?.instagram && (
+                      <a 
+                        href={member.social.instagram} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-gray-500 hover:text-white transition-colors"
+                        title="Instagram"
+                      >
+                        <Instagram className="h-4 w-4" />
                       </a>
                     )}
                   </div>
