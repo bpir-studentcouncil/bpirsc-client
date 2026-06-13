@@ -1409,7 +1409,7 @@ const AdminDashboard = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. President, General Secretary"
+                    placeholder="e.g. President, General Secretary, Designation"
                     value={teamForm.position}
                     onChange={(e) => setTeamForm({ ...teamForm, position: e.target.value })}
                     className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs"
