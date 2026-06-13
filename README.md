@@ -1,4 +1,4 @@
-# 🇧🇩 BPIR Student Council (BPIRSC) Web Portal
+# BPIR Student Council (BPIRSC) Web Portal
 
 ### 🔗 [🌐 Live Link](https://bpirsc-web.netlify.app)  
 
