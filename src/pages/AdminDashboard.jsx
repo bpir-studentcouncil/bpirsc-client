@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   });
   const [showTeamModal, setShowTeamModal] = useState(false);
   const [teamForm, setTeamForm] = useState({
-    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: ''
+    id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 0
   });
 
   const [notification, setNotification] = useState('');
@@ -359,7 +359,8 @@ const AdminDashboard = () => {
         facebook: teamForm.facebook,
         linkedin: teamForm.linkedin,
         twitter: teamForm.twitter,
-        instagram: teamForm.instagram
+        instagram: teamForm.instagram,
+        sortOrder: Number(teamForm.sortOrder) || 0
       };
 
       if (teamForm.id) {
@@ -780,7 +781,7 @@ const AdminDashboard = () => {
                       </div>
                       <button
                         onClick={() => {
-                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '' });
+                          setTeamForm({ id: '', name: '', position: '', dept: 'Computer Technology', photo: '', bio: '', facebook: '', linkedin: '', twitter: '', instagram: '', sortOrder: 0 });
                           setShowTeamModal(true);
                         }}
                         className="bg-accent-emerald hover:bg-emerald-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
@@ -795,6 +796,7 @@ const AdminDashboard = () => {
                       <table className="w-full text-xs text-left border-collapse">
                         <thead>
                           <tr className="border-b border-slate-850 text-gray-500 font-bold uppercase tracking-wider font-mono">
+                            <th className="py-3 px-4">Order</th>
                             <th className="py-3 px-4">Photo</th>
                             <th className="py-3 px-4">Name</th>
                             <th className="py-3 px-4">Position</th>
@@ -806,11 +808,12 @@ const AdminDashboard = () => {
                         <tbody className="divide-y divide-slate-900 text-gray-300">
                           {team.length === 0 ? (
                             <tr>
-                              <td colSpan="6" className="py-6 text-center text-gray-500 italic">No team members added.</td>
+                              <td colSpan="7" className="py-6 text-center text-gray-500 italic">No team members added.</td>
                             </tr>
                           ) : (
                             team.map((member) => (
                               <tr key={member._id} className="hover:bg-slate-950/30">
+                                <td className="py-3 px-4 font-mono font-bold text-accent-cyan">{member.sortOrder || 0}</td>
                                 <td className="py-3 px-4">
                                   <img 
                                     src={member.photo || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=80'} 
@@ -842,7 +845,8 @@ const AdminDashboard = () => {
                                           facebook: member.social?.facebook || '',
                                           linkedin: member.social?.linkedin || '',
                                           twitter: member.social?.twitter || '',
-                                          instagram: member.social?.instagram || ''
+                                          instagram: member.social?.instagram || '',
+                                          sortOrder: member.sortOrder || 0
                                         });
                                         setShowTeamModal(true);
                                       }}
@@ -1457,6 +1461,18 @@ const AdminDashboard = () => {
                   </div>
                 </div>
               </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-gray-400 uppercase tracking-wider mb-1">Display Order (optional, lower numbers display first)</label>
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="e.g. 1, 2, 3"
+                  value={teamForm.sortOrder}
+                  onChange={(e) => setTeamForm({ ...teamForm, sortOrder: e.target.value })}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs mb-4"
+                />
               </div>
 
               <div>
