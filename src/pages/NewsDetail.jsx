@@ -110,9 +110,17 @@ const NewsDetail = () => {
             {/* Author info card */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-850 pb-6">
               <div className="flex items-center space-x-3">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-r from-accent-emerald to-accent-cyan flex items-center justify-center font-bold text-slate-950 text-base uppercase">
-                  {article.authorName.charAt(0)}
-                </div>
+                {article.authorPhoto ? (
+                  <img 
+                    src={article.authorPhoto} 
+                    alt={article.authorName} 
+                    className="h-10 w-10 rounded-full object-cover border border-slate-700/50 flex-shrink-0" 
+                  />
+                ) : (
+                  <div className="h-10 w-10 rounded-full bg-gradient-to-r from-accent-emerald to-accent-cyan flex items-center justify-center font-bold text-slate-950 text-base uppercase flex-shrink-0">
+                    {article.authorName.charAt(0)}
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-bold text-white">{article.authorName}</p>
                   <p className="text-[10px] text-gray-500 font-mono mt-0.5 uppercase tracking-wider">{article.authorRole} Columnist</p>
