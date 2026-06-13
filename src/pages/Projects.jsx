@@ -215,8 +215,27 @@ const Projects = () => {
 
         {/* Project List */}
         {loading ? (
-          <div className="min-h-[30vh] flex items-center justify-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-accent-emerald"></div>
+          <div className="space-y-6">
+            {Array(3).fill(0).map((_, i) => (
+              <div key={i} className="glass-card rounded-2xl overflow-hidden border border-slate-800 p-6 sm:p-8 flex flex-col lg:flex-row gap-8 animate-pulse">
+                <div className="w-full lg:w-72 h-48 rounded-xl bg-slate-900/50 flex-shrink-0" />
+                <div className="flex-grow flex flex-col justify-between space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <div className="h-3.5 bg-slate-900/50 rounded w-16" />
+                      <div className="h-3.5 bg-slate-900/50 rounded w-20" />
+                    </div>
+                    <div className="h-6 bg-slate-900/50 rounded w-1/2" />
+                    <div className="h-4 bg-slate-900/50 rounded w-full" />
+                    <div className="h-4 bg-slate-900/50 rounded w-4/5" />
+                  </div>
+                  <div className="pt-6 border-t border-slate-900 flex justify-between items-center">
+                    <div className="h-4 bg-slate-900/50 rounded w-28" />
+                    <div className="h-4 bg-slate-900/50 rounded w-24" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="space-y-6">

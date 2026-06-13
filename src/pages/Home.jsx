@@ -8,6 +8,7 @@ import logoImg from '../assets/BPIR Student Council Logo.jpg';
 const Home = () => {
   const [news, setNews] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const heroSlides = [
@@ -39,6 +40,7 @@ const Home = () => {
 
     // Fetch news and projects
     const fetchData = async () => {
+      setLoading(true);
       try {
         const fetchedNews = await api.getNews({ featured: 'true' });
         // Take first 3 news
@@ -48,12 +50,15 @@ const Home = () => {
         setProjects(fetchedProjects.slice(0, 3));
       } catch (error) {
         console.error('Error fetching homepage feed:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
     return () => clearInterval(slideTimer);
   }, []);
+
 
   const stats = [
     { label: 'Total Members', count: '1,500+', icon: Users, color: 'text-emerald-400' },
@@ -225,7 +230,7 @@ const Home = () => {
         </div>
 
         {/* Featured Projects Section */}
-        {projects.length > 0 && (
+        {(loading || projects.length > 0) && (
           <div className="py-16 border-t border-slate-900">
             <div className="flex justify-between items-end mb-10">
               <div>
@@ -238,35 +243,55 @@ const Home = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                <div key={project._id} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full group hover:border-accent-emerald/20 transition-all duration-300">
-                  <div className="h-48 overflow-hidden relative">
-                    <img 
-                      src={project.coverImage} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 bg-slate-900/90 text-accent-emerald text-[10px] uppercase font-bold px-2.5 py-1 rounded-full border border-accent-emerald/30">
-                      {project.status}
+              {loading ? (
+                Array(3).fill(0).map((_, i) => (
+                  <div key={i} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full animate-pulse">
+                    <div className="h-48 bg-slate-900/50" />
+                    <div className="p-6 flex-grow flex flex-col space-y-3">
+                      <div className="h-3 bg-slate-900/50 rounded w-1/4" />
+                      <div className="h-5 bg-slate-900/50 rounded w-3/4" />
+                      <div className="space-y-2">
+                        <div className="h-3 bg-slate-900/50 rounded w-full" />
+                        <div className="h-3 bg-slate-900/50 rounded w-5/6" />
+                      </div>
+                      <div className="pt-4 border-t border-slate-800 flex justify-between items-center mt-auto">
+                        <div className="h-3 bg-slate-900/50 rounded w-1/4" />
+                        <div className="h-3 bg-slate-900/50 rounded w-1/4" />
+                      </div>
                     </div>
                   </div>
-                  <div className="p-6 flex-grow flex flex-col">
-                    <span className="text-xs font-bold text-accent-cyan uppercase tracking-wider mb-2 font-mono">{project.projectType}</span>
-                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">{project.title}</h3>
-                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4">{project.description}</p>
-                    <div className="mt-auto pt-4 border-t border-slate-800 flex justify-between items-center text-xs text-gray-500">
-                      <span>{project.startDate ? new Date(project.startDate).toLocaleDateString() : ''}</span>
-                      <Link to={`/projects`} className="text-accent-emerald font-semibold hover:underline">View details</Link>
+                ))
+              ) : (
+                projects.map((project) => (
+                  <div key={project._id} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full group hover:border-accent-emerald/20 transition-all duration-300">
+                    <div className="h-48 overflow-hidden relative">
+                      <img 
+                        src={project.coverImage} 
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 right-3 bg-slate-900/90 text-accent-emerald text-[10px] uppercase font-bold px-2.5 py-1 rounded-full border border-accent-emerald/30">
+                        {project.status}
+                      </div>
+                    </div>
+                    <div className="p-6 flex-grow flex flex-col">
+                      <span className="text-xs font-bold text-accent-cyan uppercase tracking-wider mb-2 font-mono">{project.projectType}</span>
+                      <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">{project.title}</h3>
+                      <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4">{project.description}</p>
+                      <div className="mt-auto pt-4 border-t border-slate-800 flex justify-between items-center text-xs text-gray-500">
+                        <span>{project.startDate ? new Date(project.startDate).toLocaleDateString() : ''}</span>
+                        <Link to={`/projects`} className="text-accent-emerald font-semibold hover:underline">View details</Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
 
         {/* Latest Gossip Section */}
-        {news.length > 0 && (
+        {(loading || news.length > 0) && (
           <div className="py-16 border-t border-slate-900">
             <div className="flex justify-between items-end mb-10">
               <div>
@@ -279,28 +304,47 @@ const Home = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {news.map((item) => (
-                <div key={item._id} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full group hover:border-accent-emerald/20 transition-all duration-300">
-                  <div className="h-44 overflow-hidden relative">
-                    <img 
-                      src={item.coverImage} 
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-slate-950/80 text-[10px] text-accent-cyan border border-accent-cyan/30 px-2 py-0.5 rounded uppercase font-bold font-mono">
-                      {item.category}
+              {loading ? (
+                Array(3).fill(0).map((_, i) => (
+                  <div key={i} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full animate-pulse">
+                    <div className="h-44 bg-slate-900/50" />
+                    <div className="p-6 flex-grow flex flex-col space-y-3">
+                      <div className="h-5 bg-slate-900/50 rounded w-3/4" />
+                      <div className="space-y-2">
+                        <div className="h-3 bg-slate-900/50 rounded w-full" />
+                        <div className="h-3 bg-slate-900/50 rounded w-5/6" />
+                      </div>
+                      <div className="pt-4 border-t border-slate-800 flex justify-between items-center mt-auto">
+                        <div className="h-3 bg-slate-900/50 rounded w-1/3" />
+                        <div className="h-3 bg-slate-900/50 rounded w-1/4" />
+                      </div>
                     </div>
                   </div>
-                  <div className="p-6 flex-grow flex flex-col">
-                    <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-accent-emerald transition-colors">{item.title}</h3>
-                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4">{item.content}</p>
-                    <div className="mt-auto pt-4 border-t border-slate-800 flex justify-between items-center text-[10px] text-gray-500 font-mono">
-                      <span>By {item.authorName} ({item.authorRole})</span>
-                      <span>{new Date(item.publishedAt).toLocaleDateString()}</span>
+                ))
+              ) : (
+                news.map((item) => (
+                  <div key={item._id} className="glass-card rounded-xl overflow-hidden border border-slate-800 flex flex-col h-full group hover:border-accent-emerald/20 transition-all duration-300">
+                    <div className="h-44 overflow-hidden relative">
+                      <img 
+                        src={item.coverImage} 
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 left-3 bg-slate-950/80 text-[10px] text-accent-cyan border border-accent-cyan/30 px-2 py-0.5 rounded uppercase font-bold font-mono">
+                        {item.category}
+                      </div>
+                    </div>
+                    <div className="p-6 flex-grow flex flex-col">
+                      <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-accent-emerald transition-colors">{item.title}</h3>
+                      <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4">{item.content}</p>
+                      <div className="mt-auto pt-4 border-t border-slate-800 flex justify-between items-center text-[10px] text-gray-500 font-mono">
+                        <span>By {item.authorName} ({item.authorRole})</span>
+                        <span>{new Date(item.publishedAt).toLocaleDateString()}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
