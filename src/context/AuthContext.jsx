@@ -77,9 +77,8 @@ export const AuthProvider = ({ children }) => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
           try {
-            const idToken = await user.getIdToken();
-            // Get backend details (role)
-            let profile = await fetchBackendProfile(idToken);
+            // Get backend details (role) using user.uid directly
+            let profile = await fetchBackendProfile(user.uid);
             if (!profile) {
               // If user exists in Firebase but not backend, sync them
               profile = await syncUserProfile(user);
@@ -90,7 +89,7 @@ export const AuthProvider = ({ children }) => {
               name: profile?.name || user.displayName || user.email.split('@')[0],
               role: profile?.role || 'student',
               profilePhoto: profile?.profilePhoto || user.photoURL || '',
-              token: idToken
+              token: user.uid
             });
           } catch (err) {
             console.error('Error fetching/setting user on auth state change:', err);
@@ -140,15 +139,14 @@ export const AuthProvider = ({ children }) => {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        const idToken = await user.getIdToken();
-        const profile = await fetchBackendProfile(idToken);
+        const profile = await fetchBackendProfile(user.uid);
         const loggedUser = {
           uid: user.uid,
           email: user.email,
           name: profile?.name || user.displayName || email.split('@')[0],
           role: profile?.role || 'student',
           profilePhoto: profile?.profilePhoto || user.photoURL || '',
-          token: idToken
+          token: user.uid
         };
         setCurrentUser(loggedUser);
         setLoading(false);
@@ -189,7 +187,6 @@ export const AuthProvider = ({ children }) => {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        const idToken = await user.getIdToken();
         // Sync profile with role
         const dbUser = await syncUserProfile(user, name, role);
         const newUser = {
@@ -198,7 +195,7 @@ export const AuthProvider = ({ children }) => {
           name: name,
           role: dbUser?.role || role,
           profilePhoto: dbUser?.profilePhoto || user.photoURL || '',
-          token: idToken
+          token: user.uid
         };
         setCurrentUser(newUser);
         setLoading(false);
@@ -235,8 +232,7 @@ export const AuthProvider = ({ children }) => {
         const provider = new GoogleAuthProvider();
         const userCredential = await signInWithPopup(auth, provider);
         const user = userCredential.user;
-        const idToken = await user.getIdToken();
-        let profile = await fetchBackendProfile(idToken);
+        let profile = await fetchBackendProfile(user.uid);
         if (!profile) {
           profile = await syncUserProfile(user);
         }
@@ -246,7 +242,7 @@ export const AuthProvider = ({ children }) => {
           name: profile?.name || user.displayName,
           role: profile?.role || 'student',
           profilePhoto: profile?.profilePhoto || user.photoURL || '',
-          token: idToken
+          token: user.uid
         };
         setCurrentUser(loggedUser);
         setLoading(false);
