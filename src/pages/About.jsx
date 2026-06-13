@@ -16,53 +16,14 @@ const About = () => {
     const fetchTeam = async () => {
       try {
         const team = await api.getTeam();
-        if (team && team.length > 0) {
-          setTeamMembers(team);
-        } else {
-          setTeamMembers(defaultTeam);
-        }
+        setTeamMembers(team || []);
       } catch (err) {
         console.error('Failed to fetch team members:', err);
-        setTeamMembers(defaultTeam);
+        setTeamMembers([]);
       }
     };
     fetchTeam();
   }, []);
-
-  const defaultTeam = [
-    {
-      name: "Engr. Monirul Islam",
-      position: "Advisor & Mentor",
-      dept: "Computer Technology",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
-      bio: "Academic council chair with over 12 years of instructing polytechnic graduates on CAD drafting, networking, and industry practices.",
-      social: { facebook: "https://facebook.com", linkedin: "https://linkedin.com", twitter: "" }
-    },
-    {
-      name: "Sabbir Ahmed",
-      position: "President",
-      dept: "Mechanical Technology",
-      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80",
-      bio: "Automations programmer and lead AutoCAD coordinator. Passionate about empowering students through code and hardware collaborations.",
-      social: { facebook: "https://facebook.com", linkedin: "https://linkedin.com", twitter: "https://twitter.com" }
-    },
-    {
-      name: "Nusrat Jahan",
-      position: "General Secretary",
-      dept: "Computer Technology",
-      photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&h=400&q=80",
-      bio: "Full Stack JavaScript developer. Manages administrative communications and organises quarterly tech seminars and blood campaigns.",
-      social: { facebook: "https://facebook.com", linkedin: "https://linkedin.com", twitter: "" }
-    },
-    {
-      name: "Kamrul Hasan",
-      position: "Alumni Coordinator",
-      dept: "Civil Technology",
-      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80",
-      bio: "Site manager at a top local construction firm. Facilitates alumni referrals, job openings, and industrial placement programs.",
-      social: { facebook: "", linkedin: "https://linkedin.com", twitter: "" }
-    }
-  ];
 
   const values = [
     { name: 'Leadership', desc: 'Guiding students to take charge of engineering innovation and public welfare campaigns.', icon: Compass, color: 'text-emerald-400' },
