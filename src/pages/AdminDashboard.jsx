@@ -1271,7 +1271,7 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block font-semibold text-gray-400 uppercase tracking-wider mb-1">Team Members (One Name:Role per line, e.g. Sabbir:Project Lead)</label>
+                <label className="block font-semibold text-gray-400 uppercase tracking-wider mb-1">Team Members (One Name:Role per line, Example: Sabbir:Project Lead)</label>
                 <textarea
                   placeholder="Monirul:Lead Architect&#10;Tasnim:Software Tester"
                   value={projectForm.teamMembers}
@@ -1469,7 +1469,7 @@ const AdminDashboard = () => {
                 <input
                   type="number"
                   min="0"
-                  placeholder="e.g. 1"
+                  placeholder="1"
                   value={teamForm.sortOrder}
                   onChange={(e) => setTeamForm({ ...teamForm, sortOrder: e.target.value })}
                   className="w-24 bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 outline-none text-white focus:border-accent-emerald text-xs mb-4"
