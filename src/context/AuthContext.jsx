@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }) => {
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           name: customName || firebaseUser.displayName || firebaseUser.email.split('@')[0],
-          role: customRole || 'student' // Default role
+          role: customRole || 'student', // Default role
+          profilePhoto: firebaseUser.photoURL || ''
         }),
       });
       if (response.ok) {
