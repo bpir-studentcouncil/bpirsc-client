@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import { Search, Calendar, User, Share2, Copy, Check, MessageSquareCode } from 'lucide-react';
 
 const Gossip = () => {
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('');
-  const [selectedArticle, setSelectedArticle] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
 
   const categories = [
@@ -142,7 +143,7 @@ const Gossip = () => {
                 {/* Hero Featured News Section */}
                 {featuredArticle && !activeCategory && !search && (
                   <div 
-                    onClick={() => setSelectedArticle(featuredArticle)}
+                    onClick={() => navigate(`/news/${featuredArticle._id}`)}
                     className="glass-card rounded-2xl overflow-hidden border border-slate-800/80 hover:border-accent-emerald/20 transition-all duration-300 grid grid-cols-1 lg:grid-cols-2 cursor-pointer group"
                   >
                     <div className="h-64 sm:h-80 lg:h-full overflow-hidden">
@@ -195,7 +196,7 @@ const Gossip = () => {
                   {((activeCategory || search) ? news : regularArticles).map((article) => (
                     <div
                       key={article._id}
-                      onClick={() => setSelectedArticle(article)}
+                      onClick={() => navigate(`/news/${article._id}`)}
                       className="glass-card rounded-xl overflow-hidden border border-slate-800 hover:border-accent-emerald/20 transition-all duration-300 flex flex-col h-full cursor-pointer group"
                     >
                       <div className="h-48 overflow-hidden relative">
@@ -239,89 +240,6 @@ const Gossip = () => {
           </div>
         )}
 
-        {/* Detailed Modal Reader Overlay */}
-        {selectedArticle && (
-          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-            <div className="glass-card rounded-2xl border border-slate-800 w-full max-w-3xl overflow-hidden max-h-[90vh] flex flex-col animate-scaleIn">
-              {/* Header Image banner */}
-              <div className="h-56 sm:h-72 w-full overflow-hidden relative flex-shrink-0">
-                <img 
-                  src={selectedArticle.coverImage} 
-                  alt={selectedArticle.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"></div>
-                <div className="absolute bottom-4 left-6 right-6">
-                  <span className="text-[10px] bg-accent-cyan/20 text-accent-cyan border border-accent-cyan/30 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider font-mono">
-                    {selectedArticle.category}
-                  </span>
-                  <h2 className="text-xl sm:text-2xl font-bold text-white mt-2 leading-snug drop-shadow-md">
-                    {selectedArticle.title}
-                  </h2>
-                </div>
-                <button
-                  onClick={() => setSelectedArticle(null)}
-                  className="absolute top-4 right-4 bg-slate-950/60 hover:bg-slate-950 text-white rounded-full p-2 h-8 w-8 flex items-center justify-center focus:outline-none transition-all cursor-pointer font-bold border border-slate-800"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Body Content */}
-              <div className="p-6 overflow-y-auto space-y-6 flex-grow">
-                {/* Author Card info */}
-                <div className="flex items-center justify-between border-b border-slate-850 pb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="h-9 w-9 rounded-full bg-slate-850 flex items-center justify-center font-bold text-accent-emerald text-sm uppercase">
-                      {selectedArticle.authorName.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-white leading-none">{selectedArticle.authorName}</p>
-                      <p className="text-[10px] text-gray-500 font-mono mt-0.5 uppercase tracking-wider">{selectedArticle.authorRole} Columnist</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-gray-500 font-mono">Published On</p>
-                    <p className="text-xs font-semibold text-gray-300 font-mono mt-0.5">
-                      {new Date(selectedArticle.publishedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Main article text body */}
-                <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap font-light">
-                  {selectedArticle.content}
-                </p>
-              </div>
-
-              {/* Footer Share controls */}
-              <div className="p-4 bg-slate-950/80 border-t border-slate-850 flex justify-between items-center flex-shrink-0">
-                <button
-                  onClick={(e) => handleShare(selectedArticle._id, e)}
-                  className="flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-accent-emerald bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl transition-all cursor-pointer"
-                >
-                  {copiedId === selectedArticle._id ? (
-                    <>
-                      <Check className="h-4 w-4 text-emerald-400" />
-                      <span className="text-emerald-400">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Share2 className="h-4 w-4" />
-                      <span>Copy Article Link</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  onClick={() => setSelectedArticle(null)}
-                  className="text-xs font-bold text-slate-950 bg-gradient-to-r from-accent-emerald to-accent-cyan px-5 py-2 rounded-xl hover:from-emerald-400 hover:to-cyan-400 transition-all cursor-pointer"
-                >
-                  Close Reader
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

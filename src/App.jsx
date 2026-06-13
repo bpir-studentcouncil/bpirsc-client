@@ -15,6 +15,7 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
+import NewsDetail from './pages/NewsDetail';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/news" element={<Gossip />} />
+              <Route path="/news/:id" element={<NewsDetail />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/alumni" element={<Alumni />} />
               <Route path="/about" element={<About />} />
