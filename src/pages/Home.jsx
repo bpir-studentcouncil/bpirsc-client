@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import { Calendar, Briefcase, Users, Award, BookOpen, Heart, ShieldAlert, ArrowRight, Star } from 'lucide-react';
 import logoImg from '../assets/BPIR Student Council Logo.jpg';
+import heroLeadership from '../assets/hero-leadership.jpg';
+import heroWorkspace from '../assets/hero-workspace.jpg';
+import heroVolunteer from '../assets/hero-volunteer.jpg';
 
 
 const Home = () => {
@@ -13,19 +16,19 @@ const Home = () => {
 
   const heroSlides = [
     {
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=80",
+      image: heroLeadership,
       title: "Building the Future of Polytechnic Leaders",
       subtitle: "Bangladesh Polytechnic Institute Rajshahi Student Council",
       tagline: "Empowering diploma engineers with professional engineering, automation, and leadership opportunities."
     },
     {
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1600&q=80",
+      image: heroWorkspace,
       title: "Hands-on AutoCAD & IoT Workshops",
       subtitle: "Technical Programs Section",
       tagline: "Bridging the gap between academic theory and industry demand with specialized certification courses."
     },
     {
-      image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1600&q=80",
+      image: heroVolunteer,
       title: "Active Community Volunteer Programs",
       subtitle: "Social Impact & Leadership",
       tagline: "From blood drives to disaster relief, our students actively volunteer to build a better community."
