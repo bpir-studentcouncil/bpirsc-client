@@ -1464,14 +1464,14 @@ const AdminDashboard = () => {
               </div>
 
               <div>
-                <label className="block font-semibold text-gray-400 uppercase tracking-wider mb-1">Display Order (optional, lower numbers display first)</label>
+                <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Order</label>
                 <input
                   type="number"
                   min="0"
-                  placeholder="e.g. 1, 2, 3"
+                  placeholder="e.g. 1"
                   value={teamForm.sortOrder}
                   onChange={(e) => setTeamForm({ ...teamForm, sortOrder: e.target.value })}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-4 outline-none text-white focus:border-accent-emerald text-xs mb-4"
+                  className="w-24 bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 outline-none text-white focus:border-accent-emerald text-xs mb-4"
                 />
               </div>
 
