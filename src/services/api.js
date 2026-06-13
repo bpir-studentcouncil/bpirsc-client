@@ -265,6 +265,14 @@ export const api = {
     return handleResponse(response);
   },
 
+  deleteContactMessage: async (id, token) => {
+    const response = await fetch(`${BACKEND_URL}/contact/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(token)
+    });
+    return handleResponse(response);
+  },
+
   // File Upload API
   uploadImage: async (file, token) => {
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;

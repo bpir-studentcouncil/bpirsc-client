@@ -402,6 +402,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleMessageDelete = (id) => {
+    askConfirmation(
+      'Delete Contact Message',
+      'Are you sure you want to permanently delete this contact form submission?',
+      async () => {
+        try {
+          await api.deleteContactMessage(id, currentUser.token);
+          triggerNotify('Message deleted successfully.');
+          loadDashboardData();
+        } catch (err) {
+          setErrorMsg('Error deleting contact message');
+        }
+      }
+    );
+  };
+
   return (
     <div className="bg-primary-dark min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -922,16 +938,25 @@ const AdminDashboard = () => {
                                 <h4 className="text-sm font-bold text-white mt-1">{msg.subject}</h4>
                                 <p className="text-xs text-gray-400">From: <span className="font-semibold text-gray-200">{msg.name}</span> ({msg.email})</p>
                               </div>
-                              <button
-                                onClick={() => handleMessageRead(msg._id, !msg.isRead)}
-                                className={`text-[9px] px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
-                                  msg.isRead 
-                                    ? 'bg-slate-800 text-gray-400 border-slate-700 hover:text-white' 
-                                    : 'bg-accent-cyan/20 text-accent-cyan border-accent-cyan/30 hover:bg-accent-cyan/30'
-                                }`}
-                              >
-                                {msg.isRead ? 'Mark Unread' : 'Mark Read'}
-                              </button>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleMessageRead(msg._id, !msg.isRead)}
+                                  className={`text-[9px] px-2.5 py-1 rounded-lg font-bold border transition-colors cursor-pointer ${
+                                    msg.isRead 
+                                      ? 'bg-slate-800 text-gray-400 border-slate-700 hover:text-white' 
+                                      : 'bg-accent-cyan/20 text-accent-cyan border-accent-cyan/30 hover:bg-accent-cyan/30'
+                                  }`}
+                                >
+                                  {msg.isRead ? 'Mark Unread' : 'Mark Read'}
+                                </button>
+                                <button
+                                  onClick={() => handleMessageDelete(msg._id)}
+                                  className="text-[9px] px-2.5 py-1 rounded-lg font-bold bg-rose-500/20 hover:bg-rose-500/45 text-rose-300 border border-rose-500/30 transition-colors cursor-pointer"
+                                  title="Delete message"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                             <p className="text-xs text-gray-300 leading-relaxed font-light bg-slate-950 p-4 rounded-xl border border-slate-900">
                               {msg.message}
