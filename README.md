@@ -1,6 +1,6 @@
 # 🇧🇩 BPIR Student Council (BPIRSC) Web Portal
 
-🔗 **Live Website:** [https://bpirsc-web.netlify.app](https://bpirsc-web.netlify.app)  
+### 🔗 [🌐 Live Link](https://bpirsc-web.netlify.app)  
 
 Welcome to the official web portal of the **Bangladesh Polytechnic Institute Rajshahi Student Council (BPIRSC)**. This is a modern, responsive web application built to connect students, alumni, and administrators while providing features such as course management, event archives, directories, and notices.
 
